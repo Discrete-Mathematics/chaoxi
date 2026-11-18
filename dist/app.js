@@ -52,6 +52,7 @@ function render(){
   const live=Boolean(account.user && account.modes[mode]?.live && connected);
   txt('modeLabel',modeNames[mode]); txt('accountLabel',account.user?.username || '访客空间');
   txt('balanceLabel',money(account.balance));txt('statusLabel',live?'模型已连接':'演示模式');
+  document.querySelector('.connection')?.classList.toggle('is-live', live);
   txt('threadTitle',active?.title || '新对话');
   $('welcome').hidden=!!active; $('messages').hidden=!active;
   $('messages').replaceChildren(); $('historyList').replaceChildren();
@@ -211,7 +212,7 @@ async function wallet(){
     }
     if(!p.isConnected)return;
     render();p.append(el('small','muted','可用余额'),el('div','wallet-total',money(account.balance)));
-    if(!account.user){p.append(el('p','notice','访客可免费体验演示对话。登录后可查看个人余额与用量。'),btn(connected?'登录账户':'查看账户说明',()=>accountPanel()));return;}
+    if(!account.user){p.append(el('p','notice','访客可免费体验演示对话。登录后可查看个人余额与用量。'),btn(connected?'登录账户':'查看账户说明',()=>accountPanel(),'btn primary'));return;}
     if(account.paymentsEnabled){
       p.append(el('h3','','充值金额'));const amounts=el('div','dialog-actions');p.append(amounts);
       for(const cents of [1000,3000,10000]) amounts.append(btn('¥'+cents/100,()=>{
