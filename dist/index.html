@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN" data-type="software" data-motion>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12283f">
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <meta name="description" content="潮汐 Tide 是一个支持双模式、对话迁移和按量计费的中文聊天工作台。">
+  <meta property="og:title" content="潮汐 Tide · 对话工作台">
+  <meta property="og:description" content="在潮汐开始对话，整理想法，接续以前的聊天。">
+  <title>潮汐 Tide · 对话工作台</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="history.js" defer></script>
+  <script src="demo.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a href="#prompt" class="skip-link">跳至消息输入框</a>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-mark" viewBox="0 0 48 48"><path fill="currentColor" stroke="none" d="M4 24C10 25 14 21 18 14C22 7 31 5 38 10C33 9 29 12 28 16C27 21 32 23 37 22C40 22 42 20 44 19C42 27 36 31 28 30C22 29 18 26 14 28C10 30 6 29 4 27Z"/><path d="M5 34C11 37 16 30 22 32S35 39 43 30" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M19 4H5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h3v3l5-3h6a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/><path d="M7.5 9h9M7.5 13h6"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3.5 10a8.6 8.6 0 1 1 .7 7M3 5.5v5h5M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-migrate" viewBox="0 0 24 24"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4 4-4-4 4-4"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19.5 6H6a2.5 2.5 0 0 1 0-5L17 1v5M3.5 3.5V19a2 2 0 0 0 2 2H20V6M20 11h-5a2.5 2.5 0 0 0 0 5h5"/><circle cx="15.7" cy="13.5" r=".6"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.1"/><path d="M5.5 20v-1.5a6.5 6.5 0 0 1 13 0V20"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M19.5 3.5c-6 2.6-13.7.7-14 9.2-.1 4.6 3.8 7.5 8 5.8 5.9-2.4 6.3-9.2 6-15ZM4 21l10-11"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M9 3c.5 4.3 2.3 6.3 6.5 7-4.2.7-6 2.6-6.5 7-.6-4.4-2.4-6.3-6.5-7C6.6 9.3 8.4 7.3 9 3ZM18 14c.3 2.2 1.2 3.2 3.5 3.5-2.3.4-3.2 1.4-3.5 3.5-.3-2.1-1.2-3.1-3.5-3.5 2.3-.3 3.2-1.3 3.5-3.5Z"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M3 9h13v5a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6ZM16 10h2a3 3 0 0 1 0 6h-2M6 4l1 2M10 3l1 3M14 4l1 2"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-2 6 3 6-2v14l-6 2-6-3-6 2Zm6-2v14m6-11v14"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m4 20 1.1-5.4L16.9 2.8l4.3 4.3L9.4 18.9Zm10.5-14.7 4.2 4.2M4 22h15"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="m8 13 6.9-6.9a2.2 2.2 0 0 1 3.1 3.1l-9 9a4.2 4.2 0 0 1-6-6l9.6-9.6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+  </svg>
+  <button type="button" id="scrim" aria-label="关闭导航" tabindex="-1"></button>
+  <aside id="sidebar" aria-label="主导航">
+    <div class="brand" aria-label="潮汐 Tide"><svg aria-hidden="true"><use href="#i-mark"/></svg><strong>潮汐</strong><span>Tide</span></div>
+    <button id="newChat" class="new-chat"><svg class="icon"><use href="#i-plus"/></svg>新建对话</button>
+    <nav class="side-nav">
+      <button id="historyBtn"><svg class="icon"><use href="#i-history"/></svg>历史对话</button>
+      <button id="importBtn"><svg class="icon"><use href="#i-migrate"/></svg>记录迁移</button>
+      <button id="walletBtn"><svg class="icon"><use href="#i-wallet"/></svg>用量与余额<span id="balanceLabel"></span></button>
+    </nav>
+    <div class="recent">
+      <h2>最近对话</h2>
+      <div id="historyList"><p class="empty-history">还没有对话记录</p></div>
+    </div>
+    <div class="account-wrap">
+      <button id="accountBtn" class="account-row">
+        <span class="avatar"><svg class="icon"><use href="#i-user"/></svg></span>
+        <span id="accountLabel">访客账户</span>
+        <svg class="icon account-arrow"><use href="#i-right"/></svg>
+      </button>
+    </div>
+  </aside>
+  <main id="workspace">
+    <header class="topbar">
+      <div class="breadcrumbs">
+        <button id="menuBtn" type="button" class="icon-button" aria-label="打开导航" title="打开导航" aria-controls="sidebar" aria-expanded="false"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <svg class="icon desktop-crumb" aria-hidden="true"><use href="#i-grid"/></svg>
+        <span class="crumb-root">对话工作台</span><span class="crumb-sep" aria-hidden="true">/</span><strong id="threadTitle">新对话</strong>
+      </div>
+      <div class="connection"><i></i><span id="statusLabel">本地演示</span></div>
+    </header>
+    <div class="scroll-pane" id="scrollPane">
+      <div class="main-column">
+        <section id="welcome" data-enter>
+          <div class="hero">
+            <div class="hero-art" aria-hidden="true"></div>
+            <div class="hero-copy">
+              <svg class="hero-mark" aria-hidden="true"><use href="#i-mark"/></svg>
+              <h1>今天，聊点什么？</h1>
+              <p id="subtitle">说说你的近况，或一起琢磨一个问题。</p>
+            </div>
+          </div>
+          <div class="section-heading"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg><h2>从一个话题开始</h2></div>
+          <div class="suggestions">
+            <button class="suggestion" data-prompt="今天想找个人聊聊。你能先问问我今天过得怎么样吗？">
+              <span class="topic-icon blue"><svg class="icon"><use href="#i-coffee"/></svg></span>
+              <strong>随心聊聊</strong><span class="topic-desc">聊聊今天发生的小事</span><svg class="icon topic-arrow"><use href="#i-arrow"/></svg>
+            </button>
+            <button class="suggestion" data-prompt="我有几件事想做，但不知道先做哪一件。我们一起理一理好吗？">
+              <span class="topic-icon teal"><svg class="icon"><use href="#i-map"/></svg></span>
+              <strong>梳理思路</strong><span class="topic-desc">一起把复杂的事理清楚</span><svg class="icon topic-arrow"><use href="#i-arrow"/></svg>
+            </button>
+            <button class="suggestion" data-prompt="我想给一位很久没联系的朋友写一段问候。帮我想个真诚又自然的开头。">
+              <span class="topic-icon amber"><svg class="icon"><use href="#i-pen"/></svg></span>
+              <strong>写点东西</strong><span class="topic-desc">为一段文字找个开头</span><svg class="icon topic-arrow"><use href="#i-arrow"/></svg>
+            </button>
+          </div>
+        </section>
+        <section id="messages" aria-label="对话内容" role="log" aria-live="polite" hidden></section>
+      </div>
+    </div>
+    <div class="composer-dock">
+      <div class="main-column">
+        <form id="composer">
+          <div id="attachmentBar" hidden></div>
+          <label class="sr-only" for="prompt">给潮汐发送消息</label>
+          <textarea id="prompt" rows="2" placeholder="有什么想说的，写在这里…"></textarea>
+          <div class="composer-tools">
+            <button type="button" id="modeBtn" class="mode-btn" aria-haspopup="dialog"><svg class="icon"><use href="#i-leaf"/></svg><span id="modeLabel">经济模式</span><svg class="icon caret"><use href="#i-down"/></svg></button>
+            <span class="toolbar-divider" aria-hidden="true"></span>
+            <input type="file" id="attachInput" accept=".txt,.md,.csv,text/plain,text/markdown,text/csv" hidden>
+            <button type="button" id="attachBtn" class="icon-button" aria-label="附加文本文件" title="附加文本文件"><svg class="icon"><use href="#i-clip"/></svg></button>
+            <button type="submit" id="sendBtn" aria-label="发送消息" title="发送消息"><svg class="icon"><use href="#i-send"/></svg></button>
+          </div>
+        </form>
+        <div class="composer-foot"><span><svg class="icon"><use href="#i-lock"/></svg>对话记录保存在此浏览器</span><span class="keys"><kbd>Enter</kbd> 发送<span class="middle-dot">·</span><kbd>Shift + Enter</kbd> 换行</span></div>
+      </div>
+    </div>
+  </main>
+  <dialog id="appDialog" aria-label="工作台设置"></dialog>
+</body>
+</html>
